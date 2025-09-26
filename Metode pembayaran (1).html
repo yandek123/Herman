@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Pembayaran</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #f0f4ff, #ffffff);
+      padding: 40px 20px;
+    }
+
+    .dashboard-container {
+      background: white;
+      border-radius: 24px;
+      padding: 35px;
+      max-width: 760px;
+      margin: auto;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
+      transition: all 0.3s ease;
+    }
+
+    .dashboard-container:hover {
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.09);
+    }
+
+    .dashboard-container h2 {
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 35px;
+      color: #2c3e50;
+    }
+
+    .card-payment {
+      background: #f8f9fa;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .card-payment:hover {
+      transform: scale(1.01);
+    }
+
+    .iconbank img {
+      width: 50px;
+      border-radius: 10px;
+    }
+
+    .btn-copy {
+      background: linear-gradient(to right, #4b6cb7, #182848);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 20px;
+      transition: 0.3s ease;
+    }
+
+    .btn-copy:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .qris-image {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 16px;
+      margin-top: 20px;
+      display: block;
+      border: 3px solid #dee2e6;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    input.form-control {
+      font-weight: bold;
+    }
+
+    .watermark {
+      text-align: center;
+      margin-top: 40px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    @media (max-width: 576px) {
+      .d-flex.align-items-center {
+        flex-direction: column;
+        align-items: flex-start !important;
+      }
+
+      .btn-copy {
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <h2>Metode Pembayaran</h2>
+
+    <!-- DANA -->
+    <div class="card-payment d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-3">
+        <div class="iconbank">
+          <img src="https://codingasikhome.files.wordpress.com/2022/11/dana.png" alt="Dana">
+        </div>
+        <div>
+          <strong>DANA</strong><br />
+          <input type="text" class="form-control form-control-sm mt-1" id="rek1" value="083157456266" readonly />
+        </div>
+      </div>
+      <button onclick="copyToClipboard('rek1')" class="btn btn-copy">Salin</button>
+    </div>
+
+    <!-- GoPay -->
+    <div class="card-payment d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-3">
+        <div class="iconbank">
+          <img src="https://fajar2943.wordpress.com/wp-content/uploads/2025/05/wp-17478383796558579290460510808799.jpg" alt="GoPay">
+        </div>
+        <div>
+          <strong>GoPay</strong><br />
+          <input type="text" class="form-control form-control-sm mt-1" id="rek2" value="083157456266" readonly />
+        </div>
+      </div>
+      <button onclick="copyToClipboard('rek2')" class="btn btn-copy">Salin</button>
+    </div>
+
+    <!-- QRIS -->
+    <div class="card-payment">
+      <div class="d-flex align-items-center gap-3 mb-2">
+        <div class="iconbank">
+          <img src="https://static.vecteezy.com/system/resources/previews/013/433/620/original/qris-application-icon-design-on-white-background-free-vector.jpg" alt="QRIS">
+        </div>
+        <div>
+          <strong>QRIS</strong><br />
+          <input type="text" class="form-control form-control-sm mt-1" id="rek3" value="CODINGASIK" readonly />
+        </div>
+      </div>
+      <img src="https://fajar2943.wordpress.com/wp-content/uploads/2025/07/wp-17514822931144020245648378941613.jpg" alt="QRIS Image" class="qris-image">
+    </div>
+
+    <!-- Watermark -->
+    <div class="watermark" id="watermark">
+      Created by JarzX
+    </div>
+  </div>
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Copy + Watermark Protection -->
+  <script>
+    function copyToClipboard(id) {
+      const copyText = document.getElementById(id);
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil disalin!',
+        text: copyText.value,
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        toast: true,
+        position: 'top-end'
+      });
+    }
+
+    // Proteksi watermark
+    setInterval(() => {
+      const watermark = document.getElementById('watermark');
+      if (!watermark || watermark.innerText.trim() !== 'Created by JarzX') {
+        document.body.innerHTML = '';
+        document.body.style.background = '#ffffff';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
